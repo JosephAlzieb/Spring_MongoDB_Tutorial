@@ -38,6 +38,20 @@ public class SpringMongoDbTutorialApplication {
 
 //      usingMongoTemplateAndQuery(repository, mongoTemplate, email, student);
 
+      repository.findStudentByEmail(email)
+          .ifPresentOrElse(
+              (s)-> {
+                // wenn der Student mit der E-Mail schon existiert. der IfPresent-Teil
+                // Consumer. (s) -> void
+                System.out.println(s + " already exists");
+              },
+              ()-> {
+                // der OrElse-Teil
+                // Runnable () -> void
+                repository.insert(student);
+                System.out.println("Inserting student " + student);
+              }
+          );
 
     };
   }
